@@ -46,6 +46,8 @@ p.min.css"  rel="stylesheet">
                     <img src="${dados.avatar_url}" width="120" class="rounded-circle mx-auto mb-3">
                     <h3>${dados.name || username}</h3>
                     <p>Seguidores: ${dados.followers}</p>
+                    <p>Biografia${dados.bio}</p>
+                    <p>location${dados.location || "Localização desconhecida"}</P>
                 </div>
             `;        
         } catch (erroTratado) {
@@ -53,6 +55,14 @@ p.min.css"  rel="stylesheet">
             divResultado.innerHTML = `<div class="alert alert-danger">${erroTratado.message}</div>`;
         } finally {
             loading.classList.add('d-none');
+
+            let respostaRepos = await
+            fetch(`https://api.github.com/users/${username}/repos `);
+            if (!respostaRepos.ok) {
+                throw new Error("Não foi possível carregar os repositórios");
+
+            let dadosRepos = await respostaRepos.json();    
+            }
         }
     }
 </script>
